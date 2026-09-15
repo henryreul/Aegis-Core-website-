@@ -1,0 +1,349 @@
+/* ========================================
+   AEGISCORE — HEADER
+   ======================================== */
+
+.site-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 76px;
+
+    z-index: 1000;
+
+    background: transparent;
+}
+
+
+/* ========================================
+   HEADER CONTAINER
+   ======================================== */
+
+.header-container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 40px;
+
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   AEGISCORE BRAND
+   ======================================== */
+
+.brand {
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 25px;
+    font-weight: 700;
+
+    letter-spacing: -1px;
+
+    white-space: nowrap;
+
+    margin-right: 72px;
+
+    transition: opacity 0.2s ease;
+}
+
+.brand:hover {
+    opacity: 0.75;
+}
+
+
+/* ========================================
+   MAIN NAVIGATION
+   ======================================== */
+
+.main-navigation {
+    display: flex;
+    align-items: center;
+
+    gap: 62px;
+}
+
+.main-navigation a {
+    position: relative;
+
+    color: rgba(255, 255, 255, 0.90);
+
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 400;
+
+    white-space: nowrap;
+
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.main-navigation a:hover {
+    color: #ffffff;
+    opacity: 0.7;
+}
+
+
+/* ========================================
+   RIGHT SIDE
+   ======================================== */
+
+.header-right {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 30px;
+}
+
+
+/* ========================================
+   LANGUAGE SELECTOR
+   ======================================== */
+
+.language-selector {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: rgba(255, 255, 255, 0.92);
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 400;
+
+    cursor: pointer;
+}
+
+.language-selector:hover {
+    opacity: 0.7;
+}
+
+.language-icon {
+    font-size: 16px;
+}
+
+.language-arrow {
+    font-size: 17px;
+
+    line-height: 1;
+
+    position: relative;
+    top: -1px;
+}
+
+
+/* ========================================
+   LOG IN
+   ======================================== */
+
+.login-link {
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 400;
+
+    white-space: nowrap;
+
+    transition:
+        opacity 0.2s ease,
+        color 0.2s ease;
+}
+
+.login-link:hover {
+    opacity: 0.65;
+}
+
+
+/* ========================================
+   SIGN UP
+   ======================================== */
+
+.signup-link {
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 400;
+
+    white-space: nowrap;
+
+    transition:
+        opacity 0.2s ease,
+        color 0.2s ease;
+}
+
+.signup-link:hover {
+    opacity: 0.65;
+}
+
+
+/* ========================================
+   KEYBOARD ACCESSIBILITY
+   ======================================== */
+
+.brand:focus-visible,
+.main-navigation a:focus-visible,
+.login-link:focus-visible,
+.signup-link:focus-visible,
+.language-selector:focus-visible {
+    outline: 2px solid #ffffff;
+
+    outline-offset: 5px;
+
+    border-radius: 3px;
+}
+
+
+/* ========================================
+   LARGE SCREENS
+   ======================================== */
+
+@media (min-width: 1400px) {
+
+    .header-container {
+        padding-left: 56px;
+        padding-right: 56px;
+    }
+
+    .brand {
+        margin-right: 80px;
+    }
+
+    .main-navigation {
+        gap: 70px;
+    }
+
+    .header-right {
+        gap: 34px;
+    }
+}
+
+
+/* ========================================
+   TABLETS
+   ======================================== */
+
+@media (max-width: 1000px) {
+
+    .header-container {
+        padding: 0 28px;
+    }
+
+    .brand {
+        margin-right: 45px;
+    }
+
+    .main-navigation {
+        gap: 32px;
+    }
+
+    .header-right {
+        gap: 22px;
+    }
+}
+
+
+/* ========================================
+   SMALL TABLETS / LARGE PHONES
+   ======================================== */
+
+@media (max-width: 760px) {
+
+    .site-header {
+        height: 68px;
+    }
+
+    .header-container {
+        padding: 0 22px;
+    }
+
+    .brand {
+        font-size: 23px;
+        margin-right: 0;
+    }
+
+    .main-navigation {
+        display: none;
+    }
+
+    .header-right {
+        gap: 20px;
+    }
+
+    .language-selector {
+        display: none;
+    }
+
+    .login-link,
+    .signup-link {
+        font-size: 15px;
+    }
+}
+
+
+/* ========================================
+   MOBILE
+   ======================================== */
+
+@media (max-width: 480px) {
+
+    .header-container {
+        padding: 0 18px;
+    }
+
+    .brand {
+        font-size: 21px;
+    }
+
+    .header-right {
+        gap: 16px;
+    }
+
+    .login-link,
+    .signup-link {
+        font-size: 14px;
+    }
+}
+
+
+/* ========================================
+   VERY SMALL SCREENS
+   ======================================== */
+
+@media (max-width: 360px) {
+
+    .brand {
+        font-size: 19px;
+    }
+
+    .header-right {
+        gap: 12px;
+    }
+
+    .login-link,
+    .signup-link {
+        font-size: 13px;
+    }
+}
