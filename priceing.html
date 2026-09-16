@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — AegisCore</title>
+<meta name="description" content="Simple, honest AegisCore pricing. Starter, Professional, and Enterprise plans with no hidden fees.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08090b;
+    --bg-alt:#0f1114;
+    --bg-card:#111318;
+    --border:rgba(255,255,255,0.09);
+    --border-strong:rgba(255,255,255,0.16);
+    --text:#eef0f2;
+    --text-muted:#94999f;
+    --text-faint:#5f656b;
+    --accent:#5b7fff;
+    --accent-bright:#7d9bff;
+    --accent-soft:rgba(91,127,255,0.14);
+    --green:#3ecf8e;
+    --red:#e5484d;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --max-w:1180px;
+    --radius-sm:10px;
+    --radius-md:16px;
+    --radius-lg:24px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
+
+  :focus-visible{
+    outline:2px solid var(--accent-bright);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 32px; }
+  @media (max-width:600px){ .wrap{ padding:0 20px; } }
+
+  .skip-link{
+    position:absolute; left:16px; top:-60px;
+    background:var(--text); color:var(--bg);
+    padding:10px 16px; border-radius:8px;
+    font-weight:600; font-size:14px; z-index:1000;
+    transition:top .2s ease;
+  }
+  .skip-link:focus{ top:16px; }
+
+  /* ---------- Header (shared) ---------- */
+  header.site-header{
+    position:fixed; top:0; left:0; right:0; z-index:500;
+    padding:22px 0;
+    background:rgba(8,9,11,0.78);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--border);
+  }
+  .header-inner{ display:flex; align-items:center; justify-content:space-between; gap:24px; }
+  .wordmark{
+    font-weight:700; font-size:19px; letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:9px; flex-shrink:0;
+  }
+  .wordmark .mark{ width:22px;height:22px; }
+  .wordmark .mark path{ fill:none; stroke:var(--text); stroke-width:1.4; }
+  .wordmark .mark .fill-glow{ fill:var(--accent); opacity:.9; stroke:none; }
+
+  nav.primary-nav{ display:flex; gap:36px; }
+  nav.primary-nav a{ font-size:14.5px; color:var(--text-muted); transition:color .2s ease; }
+  nav.primary-nav a:hover, nav.primary-nav a:focus-visible{ color:var(--text); }
+  nav.primary-nav a.current{ color:var(--text); }
+
+  .header-right{ display:flex; align-items:center; gap:22px; flex-shrink:0; }
+
+  .lang-select{ position:relative; }
+  .lang-btn{ display:flex; align-items:center; gap:6px; font-size:14px; color:var(--text-muted); padding:6px 4px; }
+  .lang-btn:hover{ color:var(--text); }
+  .lang-btn .chev{ display:inline-block; transition:transform .2s ease; font-size:11px; }
+  .lang-btn[aria-expanded="true"] .chev{ transform:rotate(180deg); }
+  .lang-menu{
+    position:absolute; top:calc(100% + 12px); right:0;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm);
+    min-width:140px; padding:6px; box-shadow:0 20px 40px rgba(0,0,0,0.45);
+    opacity:0; visibility:hidden; transform:translateY(-6px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  }
+  .lang-select.open .lang-menu{ opacity:1; visibility:visible; transform:translateY(0); }
+  .lang-menu button{ display:block; width:100%; text-align:left; padding:8px 10px; font-size:13.5px; border-radius:6px; color:var(--text-muted); }
+  .lang-menu button:hover{ background:rgba(255,255,255,0.05); color:var(--text); }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:10px 20px; border-radius:999px; font-size:14.5px; font-weight:600; white-space:nowrap;
+    transition:transform .18s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
+  }
+  .btn-ghost{ color:var(--text-muted); padding-left:6px; padding-right:6px; }
+  .btn-ghost:hover{ color:var(--text); }
+  .btn-solid{ background:var(--text); color:#0a0b0d; }
+  .btn-solid:hover{ transform:translateY(-1px); box-shadow:0 8px 22px rgba(255,255,255,0.12); }
+  .btn-outline{ border:1px solid var(--border-strong); color:var(--text); }
+  .btn-outline:hover{ border-color:var(--accent-bright); background:var(--accent-soft); transform:translateY(-1px); }
+
+  .menu-toggle{ display:none; width:38px;height:38px; align-items:center; justify-content:center; border-radius:8px; }
+  .menu-toggle .bars{ position:relative; width:18px;height:12px; }
+  .menu-toggle .bars span{ position:absolute; left:0; right:0; height:1.5px; background:var(--text); transition:transform .25s ease, opacity .25s ease, top .25s ease; }
+  .menu-toggle .bars span:nth-child(1){ top:0; }
+  .menu-toggle .bars span:nth-child(2){ top:5px; }
+  .menu-toggle .bars span:nth-child(3){ top:10px; }
+  .menu-toggle[aria-expanded="true"] .bars span:nth-child(1){ top:5px; transform:rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] .bars span:nth-child(2){ opacity:0; }
+  .menu-toggle[aria-expanded="true"] .bars span:nth-child(3){ top:5px; transform:rotate(-45deg); }
+
+  .mobile-panel{
+    position:fixed; inset:0; top:0; background:var(--bg); z-index:490;
+    padding:100px 32px 40px; display:flex; flex-direction:column; gap:8px;
+    transform:translateY(-8px); opacity:0; visibility:hidden;
+    transition:opacity .25s ease, transform .25s ease, visibility .25s;
+  }
+  .mobile-panel.open{ opacity:1; visibility:visible; transform:translateY(0); }
+  .mobile-panel a{ font-size:26px; font-weight:600; padding:14px 0; border-bottom:1px solid var(--border); color:var(--text); }
+  .mobile-panel .mobile-actions{ margin-top:28px; display:flex; flex-direction:column; gap:12px; }
+  .mobile-panel .mobile-actions .btn{ width:100%; }
+
+  @media (max-width:860px){
+    nav.primary-nav{ display:none; }
+    .header-right .lang-select, .header-right .btn-ghost{ display:none; }
+    .menu-toggle{ display:flex; }
+  }
+  @media (min-width:861px){ .mobile-panel{ display:none; } }
+  @media (max-width:520px){ .header-right .btn-solid{ padding:9px 16px; font-size:13.5px; } }
+
+  section{ position:relative; }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  /* ---------- Pricing hero ---------- */
+  .pricing-hero{ padding:168px 0 8px; }
+  .eyebrow-pill{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:6px 14px; border:1px solid var(--border-strong); border-radius:999px;
+    font-size:12.5px; letter-spacing:0.03em; color:var(--text-muted);
+    text-transform:uppercase;
+    margin-bottom:24px;
+  }
+  .eyebrow-pill .dot{ width:6px;height:6px; border-radius:50%; background:var(--accent-bright); }
+  .pricing-hero h1{
+    font-size:clamp(36px,6vw,58px);
+    font-weight:800;
+    letter-spacing:-0.03em;
+    line-height:1.08;
+    margin-bottom:18px;
+  }
+  .pricing-hero p{ color:var(--text-muted); font-size:17px; max-width:540px; }
+
+  /* ---------- Billing switch ---------- */
+  .billing-switch{
+    display:flex; align-items:center; gap:14px;
+    margin:48px 0 52px;
+  }
+  .billing-switch .label{ font-size:14.5px; color:var(--text-muted); transition:color .2s ease; }
+  .billing-switch .label.active{ color:var(--text); font-weight:600; }
+  .switch{
+    position:relative;
+    width:44px; height:26px;
+    border-radius:999px;
+    background:var(--bg-card);
+    border:1px solid var(--border-strong);
+    flex-shrink:0;
+    transition:background .25s ease, border-color .25s ease;
+  }
+  .switch .thumb{
+    position:absolute; top:2px; left:2px;
+    width:20px; height:20px;
+    border-radius:50%;
+    background:var(--text-muted);
+    transition:transform .25s cubic-bezier(.4,0,.2,1), background .25s ease;
+  }
+  .switch[aria-checked="true"]{ background:var(--accent-soft); border-color:var(--accent); }
+  .switch[aria-checked="true"] .thumb{ transform:translateX(18px); background:var(--accent-bright); }
+  .save-pill{
+    font-size:11.5px; color:var(--green);
+    background:rgba(62,207,142,0.12);
+    padding:3px 9px; border-radius:999px;
+  }
+
+  /* ---------- Pricing cards ---------- */
+  .pricing-cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+    align-items:stretch;
+    margin-bottom:20px;
+  }
+  @media (max-width:960px){ .pricing-cards{ grid-template-columns:1fr; } }
+
+  .p-card{
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:32px 28px;
+    display:flex;
+    flex-direction:column;
+  }
+  .p-card.featured{
+    border-color:var(--accent);
+    background:linear-gradient(180deg, rgba(91,127,255,0.07), rgba(91,127,255,0.01) 60%);
+    box-shadow:0 30px 60px rgba(91,127,255,0.10);
+  }
+  .p-card .tag-row{
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--accent-bright);
+    font-weight:700;
+    padding-bottom:16px;
+    margin-bottom:18px;
+    border-bottom:1px solid var(--border);
+  }
+  .p-card .head-row{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:14px;
+  }
+  .p-card .head-row .icon{
+    width:20px;height:20px;
+    stroke:var(--text-muted);
+    fill:none;
+    stroke-width:1.6;
+    flex-shrink:0;
+  }
+  .p-card.featured .head-row .icon{ stroke:var(--accent-bright); }
+  .p-card .head-row h3{ font-size:19px; font-weight:600; }
+  .p-card .tagline{ font-weight:600; font-size:14.5px; margin-bottom:6px; }
+  .p-card .desc{ color:var(--text-muted); font-size:14px; line-height:1.6; margin-bottom:22px; }
+
+  .p-card .price-row{ display:flex; align-items:baseline; gap:6px; font-family:var(--font-mono); }
+  .p-card .price-row .amt{ font-size:34px; font-weight:600; letter-spacing:-0.02em; }
+  .p-card .price-row .per{ font-size:13.5px; color:var(--text-muted); }
+  .p-card .billed-note{ font-size:12.5px; color:var(--text-faint); margin-top:6px; min-height:16px; }
+
+  .p-card .included-label{ font-size:13px; color:var(--text-muted); margin:26px 0 16px; }
+  .p-card .feat-list{ display:flex; flex-direction:column; gap:16px; flex:1; margin-bottom:26px; }
+  .p-card .feat-list li{ display:flex; gap:10px; }
+  .p-card .feat-list li svg{ flex-shrink:0; width:16px;height:16px; margin-top:3px; stroke:var(--accent-bright); fill:none; stroke-width:2; }
+  .p-card .feat-list .ft-title{ display:block; font-size:14.5px; font-weight:600; color:var(--text); }
+  .p-card .feat-list .ft-desc{ display:block; font-size:13.5px; color:var(--text-muted); line-height:1.55; margin-top:2px; }
+  .p-card .btn{ width:100%; margin-top:auto; }
+
+  .pricing-footnote{
+    font-size:12.5px;
+    color:var(--text-faint);
+    margin-bottom:72px;
+  }
+
+  /* ---------- Included on every plan ---------- */
+  .included-box{
+    border:1px solid var(--border);
+    border-radius:var(--radius-md);
+    padding:32px 34px;
+    margin-bottom:120px;
+  }
+  .included-box .included-heading{
+    font-size:12px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:22px;
+  }
+  .included-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px 24px;
+  }
+  .included-grid div{
+    display:flex; align-items:flex-start; gap:10px;
+    font-size:14.5px; color:var(--text-muted);
+  }
+  .included-grid svg{ flex-shrink:0; width:16px;height:16px; margin-top:3px; stroke:var(--text-muted); fill:none; stroke-width:2; }
+  @media (max-width:760px){ .included-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:480px){ .included-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- Common questions (FAQ) ---------- */
+  .faq-section{ padding-bottom:140px; }
+  .faq-section h2{
+    font-size:clamp(28px,4vw,38px);
+    font-weight:700;
+    letter-spacing:-0.02em;
+    margin-bottom:40px;
+  }
+  .faq-list{ max-width:760px; display:flex; flex-direction:column; }
+  .faq-item{ border-bottom:1px solid var(--border); }
+  .faq-q{
+    width:100%; display:flex; align-items:center; justify-content:space-between;
+    gap:20px; padding:24px 4px; text-align:left; font-size:16.5px; font-weight:500;
+  }
+  .faq-q .plus{ flex-shrink:0; width:20px;height:20px; position:relative; }
+  .faq-q .plus::before, .faq-q .plus::after{ content:""; position:absolute; background:var(--text-muted); transition:transform .25s ease; }
+  .faq-q .plus::before{ top:9px; left:0; width:20px; height:1.4px; }
+  .faq-q .plus::after{ left:9px; top:0; width:1.4px; height:20px; }
+  .faq-item.open .plus::after{ transform:rotate(90deg); opacity:0; }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+  .faq-a p{ padding:0 4px 24px; color:var(--text-muted); font-size:15px; line-height:1.7; max-width:640px; }
+
+  /* ---------- Footer (shared) ---------- */
+  footer{ padding:80px 0 36px; border-top:1px solid var(--border); }
+  .footer-top{
+    display:grid; grid-template-columns:1.4fr repeat(4,1fr); gap:32px; margin-bottom:64px;
+  }
+  @media (max-width:980px){
+    .footer-top{ grid-template-columns:1fr 1fr 1fr; row-gap:40px; }
+    .footer-brand{ grid-column:1 / -1; }
+  }
+  @media (max-width:600px){ .footer-top{ grid-template-columns:1fr 1fr; row-gap:40px; } }
+  @media (max-width:420px){ .footer-top{ grid-template-columns:1fr; } }
+  .footer-brand .wordmark{ margin-bottom:14px; }
+  .footer-brand p{ color:var(--text-muted); font-size:14.5px; margin-bottom:22px; }
+  .social-row{ display:flex; gap:10px; }
+  .social-btn{
+    width:36px;height:36px; border:1px solid var(--border); border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .social-btn:hover{ border-color:var(--border-strong); background:rgba(255,255,255,0.04); }
+  .social-btn svg{ width:16px;height:16px; fill:var(--text-muted); }
+  .social-btn svg.ig-icon{ fill:none; stroke:var(--text-muted); }
+  .footer-col h4{ font-size:13px; color:var(--text-faint); font-weight:600; margin-bottom:18px; }
+  .footer-col ul{ display:flex; flex-direction:column; gap:12px; }
+  .footer-col a{ font-size:14.5px; color:var(--text-muted); transition:color .2s ease; display:inline-flex; align-items:center; gap:8px; }
+  .footer-col a:hover{ color:var(--text); }
+  .status-indicator{ width:7px;height:7px; border-radius:50%; background:var(--red); box-shadow:0 0 6px var(--red); flex-shrink:0; }
+  .footer-divider{ border-top:1px solid var(--border); padding-top:28px; text-align:center; }
+  .footer-divider p{ font-size:13px; color:var(--text-faint); }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark" aria-label="AegisCore home">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2L4 5.5V11c0 5.4 3.4 9.9 8 11 4.6-1.1 8-5.6 8-11V5.5L12 2z"/>
+        <circle class="fill-glow" cx="12" cy="11" r="2.3"/>
+      </svg>
+      AegisCore
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="index.html#platform">Platform</a>
+      <a href="index.html#company">Company</a>
+      <a href="pricing.html" class="current" aria-current="page">Pricing</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+
+    <div class="header-right">
+      <div class="lang-select" id="langSelect">
+        <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+          文A&nbsp;&nbsp;EN <span class="chev">⌄</span>
+        </button>
+        <div class="lang-menu" role="menu" aria-label="Language">
+          <button role="menuitem">English</button>
+          <button role="menuitem">中文</button>
+          <button role="menuitem">日本語</button>
+          <button role="menuitem">Español</button>
+        </div>
+      </div>
+      <a href="index.html#login" class="btn btn-ghost">Log In</a>
+      <a href="index.html#signup" class="btn btn-solid">Sign Up</a>
+
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">
+        <span class="bars"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-panel" id="mobilePanel" aria-label="Mobile">
+  <a href="index.html#platform">Platform</a>
+  <a href="index.html#company">Company</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="index.html#contact">Contact</a>
+  <div class="mobile-actions">
+    <a href="index.html#login" class="btn btn-outline">Log In</a>
+    <a href="index.html#signup" class="btn btn-solid">Sign Up</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ================= PRICING HERO ================= -->
+  <section class="pricing-hero">
+    <div class="wrap">
+      <span class="eyebrow-pill reveal"><span class="dot"></span>Pricing</span>
+      <h1 class="reveal">Simple, honest pricing.</h1>
+      <p class="reveal">Straightforward plans that scale with you as your protection needs grow. No hidden fees.</p>
+
+      <div class="billing-switch reveal">
+        <span class="label active" id="labelMonthly">Monthly</span>
+        <button class="switch" id="billingSwitch" role="switch" aria-checked="false" aria-label="Toggle annual billing">
+          <span class="thumb"></span>
+        </button>
+        <span class="label" id="labelYearly">Annual</span>
+        <span class="save-pill">Save ~17%</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRICING CARDS ================= -->
+  <section>
+    <div class="wrap">
+      <div class="pricing-cards reveal">
+
+        <div class="p-card">
+          <div class="head-row">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L4 5.5V11c0 5.4 3.4 9.9 8 11 4.6-1.1 8-5.6 8-11V5.5L12 2z"/></svg>
+            <h3>Starter</h3>
+          </div>
+          <p class="tagline">For individuals getting started</p>
+          <p class="desc">Essential protection for a single account and device.</p>
+
+          <div class="price-row">
+            <span class="amt" data-monthly="$9.99" data-yearly="$8.33">$9.99</span>
+            <span class="per">/mo</span>
+          </div>
+          <p class="billed-note" data-monthly="" data-yearly="Billed annually ($99.99/yr)"></p>
+
+          <p class="included-label">What's included:</p>
+          <ul class="feat-list">
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span><span class="ft-title">Core threat detection</span><span class="ft-desc">Continuous checks against known threat patterns.</span></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span><span class="ft-title">Standard monitoring</span><span class="ft-desc">A single account and device, watched around the clock.</span></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span><span class="ft-title">Email alerts</span><span class="ft-desc">Get notified the moment something looks unusual.</span></span>
+            </li>
+          </ul>
+          <a href="index.html#signup" class="btn btn-outline">Get Starter</a>
+        </div>
+
+        <div class="p-card featured">
+          <div class="tag-row">Most popular</div>
+          <div class="head-row">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg>
+            <h3>Professional</h3>
+          </div>
+          <p class="tagline">For power users</p>
+          <p class="desc">Full monitoring and AI assistance for individuals and small teams.</p>
+
+          <div class="price-row">
+            <span class="amt" data-monthly="$24.99" data-yearly="$20.83">$24.99</span>
+            <span class="per">/mo</span>
+          </div>
+          <p class="billed-note" data-monthly="" data-yearly="Billed annually ($249.99/yr)"></p>
+
+          <p class="included-label">Everything in Starter, plus:</p>
+          <ul class="feat-list">
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span><span class="ft-title">AI security assistant</span><span class="ft-desc">Plain-language explanations for flagged activity.</span></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span><span class="ft-title">Multi-device coverage</span><span class="ft-desc">Protect every device tied to your account.</span></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span><span class="ft-title">Priority alerts</span><span class="ft-desc">Faster notification on higher-risk activity.</span></span>
+            </li>
+          </ul>
+          <a href="index.html#signup" class="btn btn-solid">Get Professional</a>
+        </div>
+
+        <div class="p-card">
+          <div class="head-row">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8z"/></svg>
+            <h3>Enterprise</h3>
+          </div>
+          <p class="tagline">For organizations</p>
+          <p class="desc">Advanced controls and reporting for larger organizations.</p>
+
+          <div class="price-row">
+            <span class="amt" data-monthly="$59.99" data-yearly="$49.99">$59.99</span>
+            <span class="per">/mo</span>
+          </div>
+          <p class="billed-note" data-monthly="" data-yearly="Billed annually ($599.99/yr)"></p>
+
+          <p class="included-label">Everything in Professional, plus:</p>
+          <ul class="feat-list">
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span><span class="ft-title">Team-wide dashboard</span><span class="ft-desc">Shared visibility across every account and device.</span></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span><span class="ft-title">Dedicated support</span><span class="ft-desc">A direct line when your team needs a faster answer.</span></span>
+            </li>
+          </ul>
+          <a href="index.html#signup" class="btn btn-outline">Get Enterprise</a>
+        </div>
+
+      </div>
+
+      <p class="pricing-footnote reveal">* Monitoring coverage scales with each plan's device and account limits. Reach out if your organization needs higher limits.</p>
+
+      <div class="included-box reveal">
+        <div class="included-heading">Included on every plan</div>
+        <div class="included-grid">
+          <div><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>No data used for AI training</div>
+          <div><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Encrypted in transit and at rest</div>
+          <div><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>GDPR compliant</div>
+          <div><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Cancel any time</div>
+          <div><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Export your data</div>
+          <div><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Email support</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COMMON QUESTIONS ================= -->
+  <section class="faq-section">
+    <div class="wrap">
+      <h2 class="reveal">Common questions</h2>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What is AegisCore?<span class="plus" aria-hidden="true"></span></button>
+          <div class="faq-a"><p>AegisCore is a security platform that brings threat detection, monitoring, and an AI security assistant together, so you can understand your security posture without needing to be a security expert.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Who is AegisCore for?<span class="plus" aria-hidden="true"></span></button>
+          <div class="faq-a"><p>Individuals who want peace of mind about their accounts, small businesses that need shared visibility, and larger organizations that require broader monitoring and reporting.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What does the AI security assistant do?<span class="plus" aria-hidden="true"></span></button>
+          <div class="faq-a"><p>It explains flagged activity in plain language and suggests reasonable next steps. It surfaces information and recommendations — you stay in control of any action taken on your accounts.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What does monitoring include?<span class="plus" aria-hidden="true"></span></button>
+          <div class="faq-a"><p>Monitoring covers sign-in activity, device changes, and unusual account behavior, with the scope expanding depending on your plan.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Can I switch plans at any time?<span class="plus" aria-hidden="true"></span></button>
+          <div class="faq-a"><p>Yes. You can upgrade or downgrade from your account settings whenever your needs change, and billing adjusts from your next renewal.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">What's the difference between monthly and annual billing?<span class="plus" aria-hidden="true"></span></button>
+          <div class="faq-a"><p>Annual billing is paid once a year at a discounted effective monthly rate. Monthly billing offers more flexibility with no upfront commitment.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Can I cancel my subscription?<span class="plus" aria-hidden="true"></span></button>
+          <div class="faq-a"><p>Yes. You can cancel at any time from your account settings, and you'll retain access through the end of your current billing period.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">Is my data used to train your models?<span class="plus" aria-hidden="true"></span></button>
+          <div class="faq-a"><p>No. Your account and activity data is used only to provide and improve your own protection, and is never used to train AI models.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="wordmark" aria-label="AegisCore home">
+          <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2L4 5.5V11c0 5.4 3.4 9.9 8 11 4.6-1.1 8-5.6 8-11V5.5L12 2z"/>
+            <circle class="fill-glow" cx="12" cy="11" r="2.3"/>
+          </svg>
+          AegisCore
+        </a>
+        <p>Security that understands you.</p>
+        <div class="social-row">
+          <a href="https://x.com" class="social-btn" aria-label="AegisCore on X" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-6.9L4.8 22H1.7l8.1-9.3L1 2h7.1l4.9 6.3L18.9 2zm-1.2 18h1.9L7.4 4H5.3l12.4 16z"/></svg>
+          </a>
+          <a href="https://github.com" class="social-btn" aria-label="AegisCore on GitHub" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.4 9.4 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.85-2.35 4.7-4.58 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg>
+          </a>
+          <a href="https://discord.gg/ZDnuKPBVHT" class="social-btn" aria-label="AegisCore on Discord" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M20.3 5.4A17.5 17.5 0 0015.9 4c-.2.4-.5.9-.6 1.3a16.3 16.3 0 00-4.6 0A9 9 0 0010 4a17.6 17.6 0 00-4.4 1.4C2.9 9.1 2.2 12.7 2.5 16.3a17.6 17.6 0 005.4 2.7c.4-.6.8-1.2 1.1-1.9-.6-.2-1.2-.5-1.8-.9l.4-.3a12.6 12.6 0 0010.8 0l.4.3c-.6.4-1.2.7-1.8.9.3.7.7 1.3 1.1 1.9a17.5 17.5 0 005.4-2.7c.4-4.2-.7-7.8-3-10.9zM9.7 14.1c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm5.4 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg>
+          </a>
+          <a href="https://instagram.com" class="social-btn" aria-label="AegisCore on Instagram" target="_blank" rel="noopener">
+            <svg class="ig-icon" viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="var(--text-muted)" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#platform">Platform</a></li>
+          <li><a href="index.html#platform">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html#company">About</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#careers">Careers</a></li>
+          <li><a href="index.html#status"><span class="status-indicator" aria-hidden="true"></span>Status</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="index.html#docs">Documentation</a></li>
+          <li><a href="index.html#help">Help Center</a></li>
+          <li><a href="index.html#blog">Blog</a></li>
+          <li><a href="index.html#security">Security</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="index.html#cookies">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-divider">
+      <p>© 2026 AegisCore. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* Mobile menu */
+  var menuToggle = document.getElementById('menuToggle');
+  var mobilePanel = document.getElementById('mobilePanel');
+  menuToggle.addEventListener('click', function(){
+    var open = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', String(!open));
+    mobilePanel.classList.toggle('open', !open);
+    document.body.style.overflow = !open ? 'hidden' : '';
+  });
+  mobilePanel.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      menuToggle.setAttribute('aria-expanded','false');
+      mobilePanel.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* Language dropdown */
+  var langSelect = document.getElementById('langSelect');
+  var langBtn = document.getElementById('langBtn');
+  langBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = langSelect.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', function(e){
+    if(!langSelect.contains(e.target)){
+      langSelect.classList.remove('open');
+      langBtn.setAttribute('aria-expanded','false');
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      langSelect.classList.remove('open');
+      langBtn.setAttribute('aria-expanded','false');
+    }
+  });
+
+  /* Billing switch */
+  var billingSwitch = document.getElementById('billingSwitch');
+  var labelMonthly = document.getElementById('labelMonthly');
+  var labelYearly = document.getElementById('labelYearly');
+  var amounts = document.querySelectorAll('.price-row .amt');
+  var billedNotes = document.querySelectorAll('.billed-note');
+  billingSwitch.addEventListener('click', function(){
+    var isYearly = billingSwitch.getAttribute('aria-checked') === 'true';
+    var next = !isYearly;
+    billingSwitch.setAttribute('aria-checked', String(next));
+    labelMonthly.classList.toggle('active', !next);
+    labelYearly.classList.toggle('active', next);
+    var period = next ? 'yearly' : 'monthly';
+    amounts.forEach(function(el){ el.textContent = el.getAttribute('data-' + period); });
+    billedNotes.forEach(function(el){ el.textContent = el.getAttribute('data-' + period); });
+  });
+
+  /* FAQ accordion */
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    var btn = item.querySelector('.faq-q');
+    var answer = item.querySelector('.faq-a');
+    btn.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(other){
+        if(other !== item){
+          other.classList.remove('open');
+          other.querySelector('.faq-q').setAttribute('aria-expanded','false');
+          other.querySelector('.faq-a').style.maxHeight = null;
+        }
+      });
+      item.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      answer.style.maxHeight = !isOpen ? answer.scrollHeight + 'px' : null;
+    });
+  });
+
+  /* Reveal on scroll */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.1 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
+})();
+</script>
+
+</body>
+</html>
