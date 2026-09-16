@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — AegisCore</title>
+<meta name="description" content="The terms that govern access to and use of AegisCore's website, application, and security services.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08090b;
+    --bg-alt:#0f1114;
+    --bg-card:#111318;
+    --border:rgba(255,255,255,0.09);
+    --border-strong:rgba(255,255,255,0.16);
+    --text:#eef0f2;
+    --text-muted:#94999f;
+    --text-faint:#5f656b;
+    --accent:#5b7fff;
+    --accent-bright:#7d9bff;
+    --accent-soft:rgba(91,127,255,0.14);
+    --green:#3ecf8e;
+    --red:#e5484d;
+    --amber:#e0a53e;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --max-w:1180px;
+    --radius-sm:10px;
+    --radius-md:16px;
+    --radius-lg:24px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
+
+  :focus-visible{
+    outline:2px solid var(--accent-bright);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 32px; }
+  @media (max-width:600px){ .wrap{ padding:0 20px; } }
+
+  .skip-link{
+    position:absolute; left:16px; top:-60px;
+    background:var(--text); color:var(--bg);
+    padding:10px 16px; border-radius:8px;
+    font-weight:600; font-size:14px; z-index:1000;
+    transition:top .2s ease;
+  }
+  .skip-link:focus{ top:16px; }
+
+  /* ---------- Header (shared) ---------- */
+  header.site-header{
+    position:fixed; top:0; left:0; right:0; z-index:500;
+    padding:22px 0;
+    background:rgba(8,9,11,0.78);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--border);
+  }
+  .header-inner{ display:flex; align-items:center; justify-content:space-between; gap:24px; }
+  .wordmark{
+    font-weight:700; font-size:19px; letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:9px; flex-shrink:0;
+  }
+  .wordmark .mark{ width:22px;height:22px; }
+  .wordmark .mark path{ fill:none; stroke:var(--text); stroke-width:1.4; }
+  .wordmark .mark .fill-glow{ fill:var(--accent); opacity:.9; stroke:none; }
+
+  nav.primary-nav{ display:flex; gap:36px; }
+  nav.primary-nav a{ font-size:14.5px; color:var(--text-muted); transition:color .2s ease; }
+  nav.primary-nav a:hover, nav.primary-nav a:focus-visible{ color:var(--text); }
+
+  .header-right{ display:flex; align-items:center; gap:22px; flex-shrink:0; }
+
+  .lang-select{ position:relative; }
+  .lang-btn{ display:flex; align-items:center; gap:6px; font-size:14px; color:var(--text-muted); padding:6px 4px; }
+  .lang-btn:hover{ color:var(--text); }
+  .lang-btn .chev{ display:inline-block; transition:transform .2s ease; font-size:11px; }
+  .lang-btn[aria-expanded="true"] .chev{ transform:rotate(180deg); }
+  .lang-menu{
+    position:absolute; top:calc(100% + 12px); right:0;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm);
+    min-width:140px; padding:6px; box-shadow:0 20px 40px rgba(0,0,0,0.45);
+    opacity:0; visibility:hidden; transform:translateY(-6px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  }
+  .lang-select.open .lang-menu{ opacity:1; visibility:visible; transform:translateY(0); }
+  .lang-menu button{ display:block; width:100%; text-align:left; padding:8px 10px; font-size:13.5px; border-radius:6px; color:var(--text-muted); }
+  .lang-menu button:hover{ background:rgba(255,255,255,0.05); color:var(--text); }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:10px 20px; border-radius:999px; font-size:14.5px; font-weight:600; white-space:nowrap;
+    transition:transform .18s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
+  }
+  .btn-ghost{ color:var(--text-muted); padding-left:6px; padding-right:6px; }
+  .btn-ghost:hover{ color:var(--text); }
+  .btn-solid{ background:var(--text); color:#0a0b0d; }
+  .btn-solid:hover{ transform:translateY(-1px); box-shadow:0 8px 22px rgba(255,255,255,0.12); }
+  .btn-outline{ border:1px solid var(--border-strong); color:var(--text); }
+  .btn-outline:hover{ border-color:var(--accent-bright); background:var(--accent-soft); transform:translateY(-1px); }
+
+  .menu-toggle{ display:none; width:38px;height:38px; align-items:center; justify-content:center; border-radius:8px; }
+  .menu-toggle .bars{ position:relative; width:18px;height:12px; }
+  .menu-toggle .bars span{ position:absolute; left:0; right:0; height:1.5px; background:var(--text); transition:transform .25s ease, opacity .25s ease, top .25s ease; }
+  .menu-toggle .bars span:nth-child(1){ top:0; }
+  .menu-toggle .bars span:nth-child(2){ top:5px; }
+  .menu-toggle .bars span:nth-child(3){ top:10px; }
+  .menu-toggle[aria-expanded="true"] .bars span:nth-child(1){ top:5px; transform:rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] .bars span:nth-child(2){ opacity:0; }
+  .menu-toggle[aria-expanded="true"] .bars span:nth-child(3){ top:5px; transform:rotate(-45deg); }
+
+  .mobile-panel{
+    position:fixed; inset:0; top:0; background:var(--bg); z-index:490;
+    padding:100px 32px 40px; display:flex; flex-direction:column; gap:8px;
+    transform:translateY(-8px); opacity:0; visibility:hidden;
+    transition:opacity .25s ease, transform .25s ease, visibility .25s;
+  }
+  .mobile-panel.open{ opacity:1; visibility:visible; transform:translateY(0); }
+  .mobile-panel a{ font-size:26px; font-weight:600; padding:14px 0; border-bottom:1px solid var(--border); color:var(--text); }
+  .mobile-panel .mobile-actions{ margin-top:28px; display:flex; flex-direction:column; gap:12px; }
+  .mobile-panel .mobile-actions .btn{ width:100%; }
+
+  @media (max-width:860px){
+    nav.primary-nav{ display:none; }
+    .header-right .lang-select, .header-right .btn-ghost{ display:none; }
+    .menu-toggle{ display:flex; }
+  }
+  @media (min-width:861px){ .mobile-panel{ display:none; } }
+  @media (max-width:520px){ .header-right .btn-solid{ padding:9px 16px; font-size:13.5px; } }
+
+  /* ---------- Page hero ---------- */
+  .legal-hero{
+    padding:180px 0 56px;
+  }
+  .legal-hero h1{
+    font-size:clamp(40px,7vw,68px);
+    font-weight:800;
+    letter-spacing:-0.03em;
+    line-height:1.05;
+  }
+  .legal-hero .updated{
+    margin-top:22px;
+    color:var(--text-muted);
+    font-size:15px;
+  }
+
+  /* ---------- Layout ---------- */
+  .legal-body{
+    padding-bottom:140px;
+  }
+  .legal-grid{
+    display:grid;
+    grid-template-columns:230px 1fr;
+    gap:56px;
+    align-items:start;
+  }
+  @media (max-width:640px){
+    .legal-grid{ grid-template-columns:1fr; }
+  }
+
+  .toc{
+    position:sticky;
+    top:110px;
+  }
+  .toc-label{
+    font-size:12px;
+    letter-spacing:0.06em;
+    color:var(--text-faint);
+    margin-bottom:18px;
+  }
+  .toc ol{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    counter-reset:toc;
+  }
+  .toc a{
+    display:flex;
+    gap:12px;
+    padding:8px 10px;
+    margin:0 -10px;
+    border-radius:8px;
+    font-size:14.5px;
+    color:var(--text-muted);
+    transition:color .18s ease, background .18s ease;
+  }
+  .toc a:hover{ color:var(--text); background:rgba(255,255,255,0.03); }
+  .toc a.active{ color:var(--text); background:rgba(255,255,255,0.05); }
+  .toc a .n{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--text-faint);
+    flex-shrink:0;
+    width:20px;
+  }
+  .toc a.active .n{ color:var(--accent-bright); }
+
+  @media (max-width:640px){
+    .toc{ position:static; margin-bottom:8px; }
+    .toc ol{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:2px 12px;
+    }
+  }
+  @media (max-width:420px){
+    .toc ol{ grid-template-columns:1fr; }
+  }
+
+  .legal-sections article{
+    padding:44px 0;
+    border-top:1px solid var(--border);
+  }
+  .legal-sections article:first-child{ border-top:1px solid var(--border); }
+  .legal-sections h2{
+    font-size:21px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin-bottom:16px;
+    scroll-margin-top:110px;
+  }
+  .legal-sections p{
+    color:var(--text-muted);
+    font-size:15.5px;
+    line-height:1.75;
+    max-width:680px;
+  }
+  .legal-sections p + p{ margin-top:16px; }
+  .legal-sections ul{
+    margin-top:16px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    max-width:680px;
+  }
+  .legal-sections li{
+    display:flex;
+    gap:10px;
+    color:var(--text-muted);
+    font-size:15px;
+    line-height:1.7;
+  }
+  .legal-sections li::before{
+    content:"";
+    width:5px;height:5px;
+    border-radius:50%;
+    background:var(--text-faint);
+    margin-top:9px;
+    flex-shrink:0;
+  }
+  .legal-sections strong{ color:var(--text); font-weight:600; }
+  .legal-sections a.inline-link{ color:var(--accent-bright); }
+  .legal-sections a.inline-link:hover{ text-decoration:underline; }
+
+  /* ---------- Footer (shared) ---------- */
+  footer{ padding:80px 0 36px; border-top:1px solid var(--border); }
+  .footer-top{
+    display:grid; grid-template-columns:1.4fr repeat(4,1fr); gap:32px; margin-bottom:64px;
+  }
+  @media (max-width:980px){
+    .footer-top{ grid-template-columns:1fr 1fr 1fr; row-gap:40px; }
+    .footer-brand{ grid-column:1 / -1; }
+  }
+  @media (max-width:600px){ .footer-top{ grid-template-columns:1fr 1fr; row-gap:40px; } }
+  @media (max-width:420px){ .footer-top{ grid-template-columns:1fr; } }
+  .footer-brand .wordmark{ margin-bottom:14px; }
+  .footer-brand p{ color:var(--text-muted); font-size:14.5px; margin-bottom:22px; }
+  .social-row{ display:flex; gap:10px; }
+  .social-btn{
+    width:36px;height:36px; border:1px solid var(--border); border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .social-btn:hover{ border-color:var(--border-strong); background:rgba(255,255,255,0.04); }
+  .social-btn svg{ width:16px;height:16px; fill:var(--text-muted); }
+  .social-btn svg.ig-icon{ fill:none; stroke:var(--text-muted); }
+  .footer-col h4{ font-size:13px; color:var(--text-faint); font-weight:600; margin-bottom:18px; }
+  .footer-col ul{ display:flex; flex-direction:column; gap:12px; }
+  .footer-col a{ font-size:14.5px; color:var(--text-muted); transition:color .2s ease; display:inline-flex; align-items:center; gap:8px; }
+  .footer-col a:hover{ color:var(--text); }
+  .status-indicator{ width:7px;height:7px; border-radius:50%; background:var(--red); box-shadow:0 0 6px var(--red); flex-shrink:0; }
+  .footer-divider{ border-top:1px solid var(--border); padding-top:28px; text-align:center; }
+  .footer-divider p{ font-size:13px; color:var(--text-faint); }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark" aria-label="AegisCore home">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2L4 5.5V11c0 5.4 3.4 9.9 8 11 4.6-1.1 8-5.6 8-11V5.5L12 2z"/>
+        <circle class="fill-glow" cx="12" cy="11" r="2.3"/>
+      </svg>
+      AegisCore
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="index.html#platform">Platform</a>
+      <a href="index.html#company">Company</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+
+    <div class="header-right">
+      <div class="lang-select" id="langSelect">
+        <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+          文A&nbsp;&nbsp;EN <span class="chev">⌄</span>
+        </button>
+        <div class="lang-menu" role="menu" aria-label="Language">
+          <button role="menuitem">English</button>
+          <button role="menuitem">中文</button>
+          <button role="menuitem">日本語</button>
+          <button role="menuitem">Español</button>
+        </div>
+      </div>
+      <a href="index.html#login" class="btn btn-ghost">Log In</a>
+      <a href="index.html#signup" class="btn btn-solid">Sign Up</a>
+
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">
+        <span class="bars"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-panel" id="mobilePanel" aria-label="Mobile">
+  <a href="index.html#platform">Platform</a>
+  <a href="index.html#company">Company</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="index.html#contact">Contact</a>
+  <div class="mobile-actions">
+    <a href="index.html#login" class="btn btn-outline">Log In</a>
+    <a href="index.html#signup" class="btn btn-solid">Sign Up</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ================= PAGE HERO ================= -->
+  <section class="legal-hero">
+    <div class="wrap">
+      <h1>Terms of Service</h1>
+      <p class="updated">Last updated September 15, 2026</p>
+    </div>
+  </section>
+
+  <!-- ================= BODY ================= -->
+  <section class="legal-body">
+    <div class="wrap legal-grid">
+
+      <nav class="toc" aria-label="Table of contents">
+        <div class="toc-label">CONTENTS</div>
+        <ol>
+          <li><a href="#s1"><span class="n">01</span>Welcome to AegisCore</a></li>
+          <li><a href="#s2"><span class="n">02</span>Using AegisCore</a></li>
+          <li><a href="#s3"><span class="n">03</span>Creating Your Account</a></li>
+          <li><a href="#s4"><span class="n">04</span>Keeping Your Account Secure</a></li>
+          <li><a href="#s5"><span class="n">05</span>Plans, Trials, and Subscriptions</a></li>
+          <li><a href="#s6"><span class="n">06</span>Payments and Renewals</a></li>
+          <li><a href="#s7"><span class="n">07</span>Your Data</a></li>
+          <li><a href="#s8"><span class="n">08</span>How AegisCore Uses Your Data</a></li>
+          <li><a href="#s9"><span class="n">09</span>AI-Powered Features</a></li>
+          <li><a href="#s10"><span class="n">10</span>Security Features and Limitations</a></li>
+          <li><a href="#s11"><span class="n">11</span>Acceptable Use</a></li>
+          <li><a href="#s12"><span class="n">12</span>Third-Party Services</a></li>
+          <li><a href="#s13"><span class="n">13</span>AegisCore Software and Intellectual Property</a></li>
+          <li><a href="#s14"><span class="n">14</span>Customer Content and Feedback</a></li>
+          <li><a href="#s15"><span class="n">15</span>Service Availability and Changes</a></li>
+          <li><a href="#s16"><span class="n">16</span>Disclaimers</a></li>
+          <li><a href="#s17"><span class="n">17</span>Limits of Liability</a></li>
+          <li><a href="#s18"><span class="n">18</span>Indemnification</a></li>
+          <li><a href="#s19"><span class="n">19</span>Account Suspension and Termination</a></li>
+          <li><a href="#s20"><span class="n">20</span>Changes to These Terms</a></li>
+          <li><a href="#s21"><span class="n">21</span>Governing Law and Disputes</a></li>
+          <li><a href="#s22"><span class="n">22</span>Contact AegisCore</a></li>
+        </ol>
+      </nav>
+
+      <div class="legal-sections">
+
+        <article>
+          <div>
+            <h2 id="s1">Welcome to AegisCore</h2>
+            <p>These Terms of Service ("Terms") govern access to and use of the AegisCore website, application, dashboard, and related services (collectively, the "Services") operated by AegisCore ("AegisCore," "we," "us," or "our").</p>
+            <p>By creating an account, accessing the Services, or clicking to accept these Terms, you agree to be bound by them and by our Privacy Policy. If you do not agree, please do not use the Services.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s2">Using AegisCore</h2>
+            <p>AegisCore provides security services including threat detection, continuous monitoring, risk analysis, security alerts, and an AI security assistant, delivered through a web application and connected dashboard.</p>
+            <p>You may use the Services only in compliance with these Terms and all applicable laws. We may update, expand, or adjust individual features over time as the platform evolves.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s3">Creating Your Account</h2>
+            <p>To use most features of AegisCore, you'll need to create an account. You agree to:</p>
+            <ul>
+              <li>Provide accurate, current registration information</li>
+              <li>Keep your account details up to date</li>
+              <li>Be at least the age of digital consent in your region, or have a parent or guardian's involvement where required</li>
+              <li>Accept responsibility for activity that occurs under your account</li>
+            </ul>
+            <p>If you register on behalf of a company or organization, you confirm that you have the authority to bind that organization to these Terms.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s4">Keeping Your Account Secure</h2>
+            <p>You're responsible for safeguarding your password and any credentials used to access AegisCore, and for restricting access to your account and devices.</p>
+            <p>Notify us promptly at <a href="mailto:security@aegiscore.example" class="inline-link">security@aegiscore.example</a> if you suspect unauthorized use of your account. AegisCore is not liable for losses caused by unauthorized access resulting from your failure to keep credentials secure.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s5">Plans, Trials, and Subscriptions</h2>
+            <p>AegisCore offers Starter, Professional, and Enterprise plans, billed monthly or yearly. Some plans may include a free trial; at the end of a trial, your subscription will begin unless you cancel beforehand.</p>
+            <p>Features, device limits, and monitoring scope vary by plan as described on our pricing page at the time of purchase.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s6">Payments and Renewals</h2>
+            <p>Subscriptions renew automatically at the end of each billing period unless cancelled in advance. Fees are charged to the payment method on file and, except where required by law, are non-refundable.</p>
+            <p>We may change subscription pricing with advance notice; changes take effect at your next renewal.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s7">Your Data</h2>
+            <p>"Your Data" means the account, device, and activity information you provide or that AegisCore collects while delivering monitoring and detection features on your behalf.</p>
+            <p>You retain ownership of Your Data. You grant AegisCore a limited license to process it solely to provide, maintain, and improve the Services.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s8">How AegisCore Uses Your Data</h2>
+            <p>We use Your Data to detect threats, generate alerts, populate your dashboard, and respond to support requests. We collect only what's needed to provide protection, consistent with our Privacy Policy.</p>
+            <ul>
+              <li>Data is encrypted in transit and at rest</li>
+              <li>Internal access is limited to what's needed to operate the Services</li>
+              <li>Data is not sold to third parties</li>
+            </ul>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s9">AI-Powered Features</h2>
+            <p>AegisCore's AI security assistant analyzes account and device signals to explain flagged activity in plain language and suggest possible next steps.</p>
+            <p>The assistant's output is informational and advisory. It does not take automatic action on your accounts, and you're responsible for reviewing and deciding on any recommended step before acting on it.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s10">Security Features and Limitations</h2>
+            <p>AegisCore is designed to reduce risk, not eliminate it. No monitoring or detection system can guarantee that every threat will be identified or prevented.</p>
+            <p>You remain responsible for your own security practices, including strong passwords, keeping software updated, and following the recommendations AegisCore provides.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s11">Acceptable Use</h2>
+            <p>When using AegisCore, you agree not to:</p>
+            <ul>
+              <li>Use the Services to monitor accounts or devices you don't have authorization to protect</li>
+              <li>Attempt to reverse engineer, disrupt, or probe the security of the Services</li>
+              <li>Resell or sublicense access to the Services without our written consent</li>
+              <li>Use the Services in a way that violates applicable law</li>
+            </ul>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s12">Third-Party Services</h2>
+            <p>AegisCore may integrate with or link to third-party services. We aren't responsible for the content, security, or practices of services we don't operate, and your use of them is governed by their own terms.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s13">AegisCore Software and Intellectual Property</h2>
+            <p>AegisCore and its licensors own all right, title, and interest in the Services, including the underlying software, design, and trademarks. These Terms don't grant you any ownership rights, only a limited right to use the Services as intended.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s14">Customer Content and Feedback</h2>
+            <p>If you send us feedback, suggestions, or ideas about the Services, you agree we may use them without obligation or compensation to you.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s15">Service Availability and Changes</h2>
+            <p>We aim to keep AegisCore available and reliable, but we don't guarantee uninterrupted access. We may modify, suspend, or discontinue features from time to time, and will provide notice of material changes where practical.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s16">Disclaimers</h2>
+            <p>The Services are provided "as is" and "as available." To the extent permitted by law, AegisCore disclaims all warranties, express or implied, including fitness for a particular purpose and non-infringement.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s17">Limits of Liability</h2>
+            <p>To the maximum extent permitted by law, AegisCore will not be liable for indirect, incidental, or consequential damages, or for any loss of data, revenue, or profits arising from your use of the Services.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s18">Indemnification</h2>
+            <p>You agree to defend and indemnify AegisCore against claims, losses, and expenses arising from your misuse of the Services or your violation of these Terms.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s19">Account Suspension and Termination</h2>
+            <p>We may suspend or terminate your access if you violate these Terms, pose a security risk to the Services, or if required by law. You may cancel your account at any time from your account settings.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s20">Changes to These Terms</h2>
+            <p>We may update these Terms from time to time. If we make material changes, we'll provide notice before they take effect. Continued use of the Services after changes take effect means you accept the updated Terms.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s21">Governing Law and Disputes</h2>
+            <p>These Terms are governed by the laws of the jurisdiction in which AegisCore is incorporated, without regard to conflict-of-law principles. Any disputes will be resolved in the courts of that jurisdiction, unless otherwise required by applicable law.</p>
+          </div>
+        </article>
+
+        <article>
+          <div>
+            <h2 id="s22">Contact AegisCore</h2>
+            <p>If you have questions about these Terms, reach us at <a href="mailto:legal@aegiscore.example" class="inline-link">legal@aegiscore.example</a>.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="wordmark" aria-label="AegisCore home">
+          <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2L4 5.5V11c0 5.4 3.4 9.9 8 11 4.6-1.1 8-5.6 8-11V5.5L12 2z"/>
+            <circle class="fill-glow" cx="12" cy="11" r="2.3"/>
+          </svg>
+          AegisCore
+        </a>
+        <p>Security that understands you.</p>
+        <div class="social-row">
+          <a href="https://x.com" class="social-btn" aria-label="AegisCore on X" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-6.9L4.8 22H1.7l8.1-9.3L1 2h7.1l4.9 6.3L18.9 2zm-1.2 18h1.9L7.4 4H5.3l12.4 16z"/></svg>
+          </a>
+          <a href="https://github.com" class="social-btn" aria-label="AegisCore on GitHub" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.4 9.4 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.85-2.35 4.7-4.58 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg>
+          </a>
+          <a href="https://discord.gg/ZDnuKPBVHT" class="social-btn" aria-label="AegisCore on Discord" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M20.3 5.4A17.5 17.5 0 0015.9 4c-.2.4-.5.9-.6 1.3a16.3 16.3 0 00-4.6 0A9 9 0 0010 4a17.6 17.6 0 00-4.4 1.4C2.9 9.1 2.2 12.7 2.5 16.3a17.6 17.6 0 005.4 2.7c.4-.6.8-1.2 1.1-1.9-.6-.2-1.2-.5-1.8-.9l.4-.3a12.6 12.6 0 0010.8 0l.4.3c-.6.4-1.2.7-1.8.9.3.7.7 1.3 1.1 1.9a17.5 17.5 0 005.4-2.7c.4-4.2-.7-7.8-3-10.9zM9.7 14.1c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm5.4 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg>
+          </a>
+          <a href="https://instagram.com" class="social-btn" aria-label="AegisCore on Instagram" target="_blank" rel="noopener">
+            <svg class="ig-icon" viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="var(--text-muted)" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#platform">Platform</a></li>
+          <li><a href="index.html#platform">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html#company">About</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="index.html#careers">Careers</a></li>
+          <li><a href="index.html#status"><span class="status-indicator" aria-hidden="true"></span>Status</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="index.html#docs">Documentation</a></li>
+          <li><a href="index.html#help">Help Center</a></li>
+          <li><a href="index.html#blog">Blog</a></li>
+          <li><a href="index.html#security">Security</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="index.html#cookies">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-divider">
+      <p>© 2026 AegisCore. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* Mobile menu */
+  var menuToggle = document.getElementById('menuToggle');
+  var mobilePanel = document.getElementById('mobilePanel');
+  menuToggle.addEventListener('click', function(){
+    var open = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', String(!open));
+    mobilePanel.classList.toggle('open', !open);
+    document.body.style.overflow = !open ? 'hidden' : '';
+  });
+  mobilePanel.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      menuToggle.setAttribute('aria-expanded','false');
+      mobilePanel.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* Language dropdown */
+  var langSelect = document.getElementById('langSelect');
+  var langBtn = document.getElementById('langBtn');
+  langBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = langSelect.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', function(e){
+    if(!langSelect.contains(e.target)){
+      langSelect.classList.remove('open');
+      langBtn.setAttribute('aria-expanded','false');
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      langSelect.classList.remove('open');
+      langBtn.setAttribute('aria-expanded','false');
+    }
+  });
+
+  /* Active TOC highlighting */
+  var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var sections = tocLinks.map(function(a){
+    return document.getElementById(a.getAttribute('href').slice(1));
+  });
+  function setActive(id){
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+    });
+  }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ setActive(entry.target.id); }
+      });
+    }, { rootMargin: '-110px 0px -70% 0px', threshold: 0 });
+    sections.forEach(function(s){ if(s) io.observe(s); });
+  }
+})();
+</script>
+
+</body>
+</html>
