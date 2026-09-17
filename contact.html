@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — AegisCore</title>
+<meta name="description" content="Get in touch with the AegisCore team for support, partnerships, or to report a security issue.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08090b;
+    --bg-alt:#0f1114;
+    --bg-card:#111318;
+    --border:rgba(255,255,255,0.09);
+    --border-strong:rgba(255,255,255,0.16);
+    --text:#eef0f2;
+    --text-muted:#94999f;
+    --text-faint:#5f656b;
+    --accent:#5b7fff;
+    --accent-bright:#7d9bff;
+    --accent-soft:rgba(91,127,255,0.14);
+    --green:#3ecf8e;
+    --red:#e5484d;
+    --font-body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --max-w:1180px;
+    --radius-sm:10px;
+    --radius-md:16px;
+    --radius-lg:24px;
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
+  input,select,textarea{font:inherit;color:inherit;}
+
+  :focus-visible{
+    outline:2px solid var(--accent-bright);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .wrap{ max-width:var(--max-w); margin:0 auto; padding:0 32px; }
+  @media (max-width:600px){ .wrap{ padding:0 20px; } }
+
+  .skip-link{
+    position:absolute; left:16px; top:-60px;
+    background:var(--text); color:var(--bg);
+    padding:10px 16px; border-radius:8px;
+    font-weight:600; font-size:14px; z-index:1000;
+    transition:top .2s ease;
+  }
+  .skip-link:focus{ top:16px; }
+
+  /* ---------- Header (shared) ---------- */
+  header.site-header{
+    position:fixed; top:0; left:0; right:0; z-index:500;
+    padding:22px 0;
+    background:rgba(8,9,11,0.78);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--border);
+  }
+  .header-inner{ display:flex; align-items:center; justify-content:space-between; gap:24px; }
+  .wordmark{
+    font-weight:700; font-size:19px; letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:9px; flex-shrink:0;
+  }
+  .wordmark .mark{ width:22px;height:22px; }
+  .wordmark .mark path{ fill:none; stroke:var(--text); stroke-width:1.4; }
+  .wordmark .mark .fill-glow{ fill:var(--accent); opacity:.9; stroke:none; }
+
+  nav.primary-nav{ display:flex; gap:36px; }
+  nav.primary-nav a{ font-size:14.5px; color:var(--text-muted); transition:color .2s ease; }
+  nav.primary-nav a:hover, nav.primary-nav a:focus-visible{ color:var(--text); }
+  nav.primary-nav a.current{ color:var(--text); }
+
+  .header-right{ display:flex; align-items:center; gap:22px; flex-shrink:0; }
+
+  .lang-select{ position:relative; }
+  .lang-btn{ display:flex; align-items:center; gap:6px; font-size:14px; color:var(--text-muted); padding:6px 4px; }
+  .lang-btn:hover{ color:var(--text); }
+  .lang-btn .chev{ display:inline-block; transition:transform .2s ease; font-size:11px; }
+  .lang-btn[aria-expanded="true"] .chev{ transform:rotate(180deg); }
+  .lang-menu{
+    position:absolute; top:calc(100% + 12px); right:0;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-sm);
+    min-width:140px; padding:6px; box-shadow:0 20px 40px rgba(0,0,0,0.45);
+    opacity:0; visibility:hidden; transform:translateY(-6px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  }
+  .lang-select.open .lang-menu{ opacity:1; visibility:visible; transform:translateY(0); }
+  .lang-menu button{ display:block; width:100%; text-align:left; padding:8px 10px; font-size:13.5px; border-radius:6px; color:var(--text-muted); }
+  .lang-menu button:hover{ background:rgba(255,255,255,0.05); color:var(--text); }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:10px 20px; border-radius:999px; font-size:14.5px; font-weight:600; white-space:nowrap;
+    transition:transform .18s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
+    cursor:pointer;
+  }
+  .btn-ghost{ color:var(--text-muted); padding-left:6px; padding-right:6px; }
+  .btn-ghost:hover{ color:var(--text); }
+  .btn-solid{ background:var(--text); color:#0a0b0d; }
+  .btn-solid:hover{ transform:translateY(-1px); box-shadow:0 8px 22px rgba(255,255,255,0.12); }
+  .btn-outline{ border:1px solid var(--border-strong); color:var(--text); }
+  .btn-outline:hover{ border-color:var(--accent-bright); background:var(--accent-soft); transform:translateY(-1px); }
+
+  .menu-toggle{ display:none; width:38px;height:38px; align-items:center; justify-content:center; border-radius:8px; }
+  .menu-toggle .bars{ position:relative; width:18px;height:12px; }
+  .menu-toggle .bars span{ position:absolute; left:0; right:0; height:1.5px; background:var(--text); transition:transform .25s ease, opacity .25s ease, top .25s ease; }
+  .menu-toggle .bars span:nth-child(1){ top:0; }
+  .menu-toggle .bars span:nth-child(2){ top:5px; }
+  .menu-toggle .bars span:nth-child(3){ top:10px; }
+  .menu-toggle[aria-expanded="true"] .bars span:nth-child(1){ top:5px; transform:rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] .bars span:nth-child(2){ opacity:0; }
+  .menu-toggle[aria-expanded="true"] .bars span:nth-child(3){ top:5px; transform:rotate(-45deg); }
+
+  .mobile-panel{
+    position:fixed; inset:0; top:0; background:var(--bg); z-index:490;
+    padding:100px 32px 40px; display:flex; flex-direction:column; gap:8px;
+    transform:translateY(-8px); opacity:0; visibility:hidden;
+    transition:opacity .25s ease, transform .25s ease, visibility .25s;
+  }
+  .mobile-panel.open{ opacity:1; visibility:visible; transform:translateY(0); }
+  .mobile-panel a{ font-size:26px; font-weight:600; padding:14px 0; border-bottom:1px solid var(--border); color:var(--text); }
+  .mobile-panel .mobile-actions{ margin-top:28px; display:flex; flex-direction:column; gap:12px; }
+  .mobile-panel .mobile-actions .btn{ width:100%; }
+
+  @media (max-width:860px){
+    nav.primary-nav{ display:none; }
+    .header-right .lang-select, .header-right .btn-ghost{ display:none; }
+    .menu-toggle{ display:flex; }
+  }
+  @media (min-width:861px){ .mobile-panel{ display:none; } }
+  @media (max-width:520px){ .header-right .btn-solid{ padding:9px 16px; font-size:13.5px; } }
+
+  section{ position:relative; }
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
+  /* ---------- Contact hero ---------- */
+  .contact-hero{ padding:168px 0 8px; }
+  .contact-hero h1{
+    font-size:clamp(36px,6vw,58px);
+    font-weight:800;
+    letter-spacing:-0.03em;
+    line-height:1.08;
+    margin-bottom:20px;
+  }
+  .contact-hero p{ color:var(--text-muted); font-size:17px; line-height:1.65; max-width:640px; }
+
+  /* ---------- Contact layout ---------- */
+  .contact-body{ padding:64px 0 140px; }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:24px;
+    align-items:start;
+  }
+  @media (max-width:900px){
+    .contact-grid{ grid-template-columns:1fr; }
+  }
+
+  .contact-panel{
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:36px 32px;
+  }
+  .contact-panel h2{
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    margin-bottom:14px;
+  }
+  .contact-panel > p{
+    color:var(--text-muted);
+    font-size:14.5px;
+    line-height:1.7;
+    margin-bottom:28px;
+  }
+
+  .info-block{
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:18px 20px;
+    margin-bottom:14px;
+  }
+  .info-block:last-child{ margin-bottom:0; }
+  .info-block .label{
+    font-size:11.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:8px;
+  }
+  .info-block a.email-link{
+    color:var(--accent-bright);
+    font-size:15.5px;
+    font-weight:500;
+  }
+  .info-block a.email-link:hover{ text-decoration:underline; }
+  .info-block p{
+    color:var(--text-muted);
+    font-size:14px;
+    line-height:1.6;
+  }
+  .info-block p strong{ color:var(--text); font-weight:600; }
+
+  /* ---------- Form ---------- */
+  .contact-panel form{ display:flex; flex-direction:column; gap:20px; }
+  .form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  @media (max-width:560px){
+    .form-row{ grid-template-columns:1fr; }
+  }
+  .field label{
+    display:block;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .field label .req{ color:var(--accent-bright); }
+  .field input,
+  .field select,
+  .field textarea{
+    width:100%;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:12px 14px;
+    font-size:14.5px;
+    color:var(--text);
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder{ color:var(--text-faint); }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus{
+    outline:none;
+    border-color:var(--accent-bright);
+    background:#14161c;
+  }
+  .field textarea{ resize:vertical; min-height:140px; line-height:1.6; }
+  .field select{
+    appearance:none;
+    -webkit-appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394999f' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    background-size:16px;
+    padding-right:38px;
+    cursor:pointer;
+  }
+  .field select option{ background:var(--bg-card); color:var(--text); }
+
+  .consent-row{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    font-size:13.5px;
+    color:var(--text-muted);
+    line-height:1.6;
+  }
+  .consent-row input[type="checkbox"]{
+    width:18px; height:18px;
+    margin-top:1px;
+    accent-color:var(--accent);
+    flex-shrink:0;
+    cursor:pointer;
+  }
+  .consent-row a{ color:var(--accent-bright); }
+  .consent-row a:hover{ text-decoration:underline; }
+
+  .form-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:4px;
+  }
+  .form-footer .note{ font-size:12.5px; color:var(--text-faint); max-width:340px; line-height:1.6; }
+  .form-footer .btn{ flex-shrink:0; }
+  .form-footer .btn:disabled{ opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+
+  .form-status{
+    font-size:13.5px;
+    padding:12px 14px;
+    border-radius:var(--radius-sm);
+    display:none;
+  }
+  .form-status.show{ display:block; }
+  .form-status.success{ background:rgba(62,207,142,0.1); color:var(--green); border:1px solid rgba(62,207,142,0.25); }
+  .form-status.error{ background:rgba(229,72,77,0.1); color:var(--red); border:1px solid rgba(229,72,77,0.25); }
+
+  /* ---------- Footer (shared) ---------- */
+  footer{ padding:80px 0 36px; border-top:1px solid var(--border); }
+  .footer-top{
+    display:grid; grid-template-columns:1.4fr repeat(4,1fr); gap:32px; margin-bottom:64px;
+  }
+  @media (max-width:980px){
+    .footer-top{ grid-template-columns:1fr 1fr 1fr; row-gap:40px; }
+    .footer-brand{ grid-column:1 / -1; }
+  }
+  @media (max-width:600px){ .footer-top{ grid-template-columns:1fr 1fr; row-gap:40px; } }
+  @media (max-width:420px){ .footer-top{ grid-template-columns:1fr; } }
+  .footer-brand .wordmark{ margin-bottom:14px; }
+  .footer-brand p{ color:var(--text-muted); font-size:14.5px; margin-bottom:22px; }
+  .social-row{ display:flex; gap:10px; }
+  .social-btn{
+    width:36px;height:36px; border:1px solid var(--border); border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .social-btn:hover{ border-color:var(--border-strong); background:rgba(255,255,255,0.04); }
+  .social-btn svg{ width:16px;height:16px; fill:var(--text-muted); }
+  .social-btn svg.ig-icon{ fill:none; stroke:var(--text-muted); }
+  .footer-col h4{ font-size:13px; color:var(--text-faint); font-weight:600; margin-bottom:18px; }
+  .footer-col ul{ display:flex; flex-direction:column; gap:12px; }
+  .footer-col a{ font-size:14.5px; color:var(--text-muted); transition:color .2s ease; display:inline-flex; align-items:center; gap:8px; }
+  .footer-col a:hover{ color:var(--text); }
+  .status-indicator{ width:7px;height:7px; border-radius:50%; background:var(--red); box-shadow:0 0 6px var(--red); flex-shrink:0; }
+  .footer-divider{ border-top:1px solid var(--border); padding-top:28px; text-align:center; }
+  .footer-divider p{ font-size:13px; color:var(--text-faint); }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark" aria-label="AegisCore home">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2L4 5.5V11c0 5.4 3.4 9.9 8 11 4.6-1.1 8-5.6 8-11V5.5L12 2z"/>
+        <circle class="fill-glow" cx="12" cy="11" r="2.3"/>
+      </svg>
+      AegisCore
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="index.html#platform">Platform</a>
+      <a href="index.html#company">Company</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="contact.html" class="current" aria-current="page">Contact</a>
+    </nav>
+
+    <div class="header-right">
+      <div class="lang-select" id="langSelect">
+        <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+          文A&nbsp;&nbsp;EN <span class="chev">⌄</span>
+        </button>
+        <div class="lang-menu" role="menu" aria-label="Language">
+          <button role="menuitem">English</button>
+          <button role="menuitem">中文</button>
+          <button role="menuitem">日本語</button>
+          <button role="menuitem">Español</button>
+        </div>
+      </div>
+      <a href="index.html#login" class="btn btn-ghost">Log In</a>
+      <a href="index.html#signup" class="btn btn-solid">Sign Up</a>
+
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">
+        <span class="bars"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-panel" id="mobilePanel" aria-label="Mobile">
+  <a href="index.html#platform">Platform</a>
+  <a href="index.html#company">Company</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="contact.html">Contact</a>
+  <div class="mobile-actions">
+    <a href="index.html#login" class="btn btn-outline">Log In</a>
+    <a href="index.html#signup" class="btn btn-solid">Sign Up</a>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ================= CONTACT HERO ================= -->
+  <section class="contact-hero">
+    <div class="wrap">
+      <h1 class="reveal">Let's talk security.</h1>
+      <p class="reveal">Have a question, need support, want to discuss a partnership, or found something we should know about? Send us a message and the AegisCore team will take a look.</p>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT BODY ================= -->
+  <section class="contact-body">
+    <div class="wrap contact-grid">
+
+      <div class="contact-panel reveal">
+        <h2>Get in touch</h2>
+        <p>Use the form to send a message directly to the AegisCore team. Please provide as much useful detail as possible so we can understand what you need.</p>
+
+        <div class="info-block">
+          <div class="label">Email</div>
+          <a class="email-link" href="mailto:aegiscorehq@gmail.com">aegiscorehq@gmail.com</a>
+        </div>
+
+        <div class="info-block">
+          <div class="label">Support</div>
+          <p>Technical support, account questions, security concerns, and general assistance.</p>
+        </div>
+
+        <div class="info-block">
+          <div class="label">Security</div>
+          <p>If you are reporting a potential security issue, select <strong>Security</strong> in the form.</p>
+        </div>
+      </div>
+
+      <div class="contact-panel reveal">
+        <h2>Send us a message</h2>
+        <p>Complete the form below and we'll receive your message at the AegisCore support inbox.</p>
+
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="cf-name">Name <span class="req">*</span></label>
+              <input type="text" id="cf-name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="cf-email">Email <span class="req">*</span></label>
+              <input type="email" id="cf-email" name="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="cf-company">Company</label>
+              <input type="text" id="cf-company" name="company" placeholder="Company name (optional)">
+            </div>
+            <div class="field">
+              <label for="cf-reason">Reason for Contact <span class="req">*</span></label>
+              <select id="cf-reason" name="reason" required>
+                <option value="" disabled selected>Select a reason</option>
+                <option value="Technical Support">Technical support</option>
+                <option value="Account Question">Account question</option>
+                <option value="Security">Security</option>
+                <option value="Partnership">Partnership</option>
+                <option value="Sales">Sales</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="cf-subject">Subject <span class="req">*</span></label>
+            <input type="text" id="cf-subject" name="subject" placeholder="What can we help with?" required>
+          </div>
+
+          <div class="field">
+            <label for="cf-message">Message <span class="req">*</span></label>
+            <textarea id="cf-message" name="message" placeholder="Tell us how we can help..." required></textarea>
+          </div>
+
+          <label class="consent-row">
+            <input type="checkbox" id="cf-consent" name="consent" required>
+            <span>I agree to the <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a>.</span>
+          </label>
+
+          <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
+
+          <div class="form-footer">
+            <p class="note">Submitting opens your email app with this message addressed to the AegisCore support team — just hit send.</p>
+            <button type="submit" class="btn btn-solid" id="submitBtn">Send Message</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="wordmark" aria-label="AegisCore home">
+          <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2L4 5.5V11c0 5.4 3.4 9.9 8 11 4.6-1.1 8-5.6 8-11V5.5L12 2z"/>
+            <circle class="fill-glow" cx="12" cy="11" r="2.3"/>
+          </svg>
+          AegisCore
+        </a>
+        <p>Security that understands you.</p>
+        <div class="social-row">
+          <a href="https://x.com" class="social-btn" aria-label="AegisCore on X" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-6.9L4.8 22H1.7l8.1-9.3L1 2h7.1l4.9 6.3L18.9 2zm-1.2 18h1.9L7.4 4H5.3l12.4 16z"/></svg>
+          </a>
+          <a href="https://github.com" class="social-btn" aria-label="AegisCore on GitHub" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.4 9.4 0 015 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.6 1.03 2.69 0 3.85-2.35 4.7-4.58 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0012 2z"/></svg>
+          </a>
+          <a href="https://discord.gg/ZDnuKPBVHT" class="social-btn" aria-label="AegisCore on Discord" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M20.3 5.4A17.5 17.5 0 0015.9 4c-.2.4-.5.9-.6 1.3a16.3 16.3 0 00-4.6 0A9 9 0 0010 4a17.6 17.6 0 00-4.4 1.4C2.9 9.1 2.2 12.7 2.5 16.3a17.6 17.6 0 005.4 2.7c.4-.6.8-1.2 1.1-1.9-.6-.2-1.2-.5-1.8-.9l.4-.3a12.6 12.6 0 0010.8 0l.4.3c-.6.4-1.2.7-1.8.9.3.7.7 1.3 1.1 1.9a17.5 17.5 0 005.4-2.7c.4-4.2-.7-7.8-3-10.9zM9.7 14.1c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm5.4 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg>
+          </a>
+          <a href="https://instagram.com" class="social-btn" aria-label="AegisCore on Instagram" target="_blank" rel="noopener">
+            <svg class="ig-icon" viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="var(--text-muted)" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#platform">Platform</a></li>
+          <li><a href="index.html#platform">Features</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html#company">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="index.html#careers">Careers</a></li>
+          <li><a href="index.html#status"><span class="status-indicator" aria-hidden="true"></span>Status</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="index.html#docs">Documentation</a></li>
+          <li><a href="index.html#help">Help Center</a></li>
+          <li><a href="index.html#blog">Blog</a></li>
+          <li><a href="index.html#security">Security</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="index.html#cookies">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-divider">
+      <p>© 2026 AegisCore. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* Mobile menu */
+  var menuToggle = document.getElementById('menuToggle');
+  var mobilePanel = document.getElementById('mobilePanel');
+  menuToggle.addEventListener('click', function(){
+    var open = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', String(!open));
+    mobilePanel.classList.toggle('open', !open);
+    document.body.style.overflow = !open ? 'hidden' : '';
+  });
+  mobilePanel.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      menuToggle.setAttribute('aria-expanded','false');
+      mobilePanel.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* Language dropdown */
+  var langSelect = document.getElementById('langSelect');
+  var langBtn = document.getElementById('langBtn');
+  langBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = langSelect.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', function(e){
+    if(!langSelect.contains(e.target)){
+      langSelect.classList.remove('open');
+      langBtn.setAttribute('aria-expanded','false');
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      langSelect.classList.remove('open');
+      langBtn.setAttribute('aria-expanded','false');
+    }
+  });
+
+  /* Reveal on scroll */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.1 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  /* Contact form -> mailto */
+  var CONTACT_EMAIL = 'aegiscorehq@gmail.com';
+  var form = document.getElementById('contactForm');
+  var status = document.getElementById('formStatus');
+
+  function showStatus(kind, message){
+    status.textContent = message;
+    status.className = 'form-status show ' + kind;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var name = document.getElementById('cf-name').value.trim();
+    var email = document.getElementById('cf-email').value.trim();
+    var company = document.getElementById('cf-company').value.trim();
+    var reasonEl = document.getElementById('cf-reason');
+    var reason = reasonEl.value;
+    var subject = document.getElementById('cf-subject').value.trim();
+    var message = document.getElementById('cf-message').value.trim();
+    var consent = document.getElementById('cf-consent').checked;
+
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if(!name || !email || !reason || !subject || !message){
+      showStatus('error', 'Please fill in all required fields before sending.');
+      return;
+    }
+    if(!emailPattern.test(email)){
+      showStatus('error', 'Please enter a valid email address.');
+      return;
+    }
+    if(!consent){
+      showStatus('error', 'Please agree to the Privacy Policy and Terms of Service to continue.');
+      return;
+    }
+
+    var bodyLines = [
+      'Name: ' + name,
+      'Email: ' + email,
+      'Company: ' + (company || '—'),
+      'Reason for contact: ' + reason,
+      '',
+      message
+    ];
+
+    var mailSubject = '[AegisCore Contact] ' + subject;
+    var mailBody = bodyLines.join('\n');
+    var mailtoUrl = 'mailto:' + CONTACT_EMAIL
+      + '?subject=' + encodeURIComponent(mailSubject)
+      + '&body=' + encodeURIComponent(mailBody);
+
+    showStatus('success', 'Opening your email app with this message addressed to ' + CONTACT_EMAIL + ' — just hit send.');
+    window.location.href = mailtoUrl;
+  });
+})();
+</script>
+
+</body>
+</html>
